@@ -16,6 +16,7 @@ object BuildSettings {
 }
 
 object MyBuild extends Build {
+
   import BuildSettings._
 
   lazy val root: Project = Project(
@@ -34,7 +35,10 @@ object MyBuild extends Build {
       libraryDependencies ++= (
         if (scalaVersion.value.startsWith("2.10")) List("org.scalamacros" %% "quasiquotes" % paradiseVersion)
         else Nil
-      )
+        ) ++ Seq(
+        "com.novocode" % "junit-interface" % "0.11" % "test",
+        "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+        )
     )
   )
 
@@ -42,5 +46,5 @@ object MyBuild extends Build {
     "core",
     file("core"),
     settings = buildSettings
-  ) dependsOn(macros)
+  ) dependsOn (macros)
 }
