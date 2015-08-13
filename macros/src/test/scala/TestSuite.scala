@@ -8,10 +8,14 @@ import org.scalatest.FunSuite
 class TestSuite extends FunSuite with BeforeAndAfterAll {
 
   test("bytecode") {
-   val b = Tree.getScorer()
+    //    val b = Tree.getScorer{val a = 5.0}
 
-    val c = b(Array(10.0, 12.0, 11.0))
+    val codeGen = Tree.getScorer(10)
+    //    print(b._1)
+    //    val fun = b._2
+    //    val c = fun(Array(10.0, 12.0, 11.0))
 
+    println("\ncool")
     val a = 10
   }
 }
