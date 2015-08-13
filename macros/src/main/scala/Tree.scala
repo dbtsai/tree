@@ -6,11 +6,11 @@ import scala.language.experimental.macros
  */
 object Tree {
 
-  def getScorer(): Array[Double] => Double = macro scorer_impl
+  def getScorer(param: Double): Array[Double] => Double = macro scorer_impl
 
-  def scorer_impl(c: Context)(): c.Expr[Array[Double] => Double] = {
+  def scorer_impl(c: Context)(param: c.Expr[Double]): c.Expr[Array[Double] => Double] = {
     import c.universe._
-    val tree: c.universe.Tree = q"""if (input(0) > 2) 3.0 else 4.0"""
+    val tree: c.universe.Tree = q"""if (input(0) > ${param}) 1.0 else 0.0"""
 
     c.Expr[Array[Double] => Double](
       q"""
