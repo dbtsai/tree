@@ -1,3 +1,5 @@
+import com.netflix.pvr.score.function.RegressionTreeScorer
+import com.netflix.pvr.score.function.RegressionTreeScorer.{Leaf, Branch}
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.FunSuite
 
@@ -8,7 +10,14 @@ import org.scalatest.FunSuite
 class TestSuite extends FunSuite with BeforeAndAfterAll {
 
   test("bytecode") {
-    //    val b = Tree.getScorer{val a = 5.0}
+
+    val left = new Branch(1, 3.0, new Leaf(4.0), new Leaf(-3.3))
+    val right = new Branch(1, -5.0, new Leaf(-2.2), new Leaf(1.0))
+    val root = new Branch(0, -5.0, left, right)
+    val instance = new RegressionTreeScorer(root, false)
+
+
+    val b = Tree.getScorer(5)
 
     val codeGen = Tree.getScorer(10)
     //    print(b._1)
