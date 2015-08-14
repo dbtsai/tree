@@ -13,18 +13,19 @@ class TestSuite extends FunSuite with BeforeAndAfterAll {
 
     val left = new Branch(1, 3.0, new Leaf(4.0), new Leaf(-3.3))
     val right = new Branch(1, -5.0, new Leaf(-2.2), new Leaf(1.0))
-    val root = new Branch(0, -5.0, left, right)
+    val root: Branch = new Branch(0, -5.0, left, right)
     val instance = new RegressionTreeScorer(root, false)
 
 
-    val b = Tree.getScorer(5)
+    val (code, scorer) = Tree.getScorer(root)
 
-    val codeGen = Tree.getScorer(10)
-    //    print(b._1)
-    //    val fun = b._2
-    //    val c = fun(Array(10.0, 12.0, 11.0))
 
-    println("\ncool")
+    print(code)
+
+
+     val score = scorer(Array(10.0, 12.0, 11.0))
+
+    println("\n\n Finished")
     val a = 10
   }
 }
