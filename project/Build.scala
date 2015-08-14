@@ -11,8 +11,6 @@ object BuildSettings {
     crossScalaVersions := Seq("2.10.2", "2.10.3", "2.10.4", "2.10.5", "2.11.0", "2.11.1", "2.11.2", "2.11.3", "2.11.4", "2.11.5", "2.11.6", "2.11.7"),
     resolvers += Resolver.sonatypeRepo("snapshots"),
     resolvers += Resolver.sonatypeRepo("releases"),
-    resolvers += "Netflix Nfrepo Maven Releases" at "http://artifacts.netflix.com/nfrepo-releases-pom",
-    resolvers += "Netflix Nfrepo Maven Snapshots" at "http://artifacts.netflix.com/nfrepo-snapshots-pom",
     resolvers += "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/",
     resolvers += "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases/",
     addCompilerPlugin("org.scalamacros" % "paradise" % paradiseVersion cross CrossVersion.full)
@@ -41,8 +39,7 @@ object MyBuild extends Build {
         else Nil
         ) ++ Seq(
         "com.novocode" % "junit-interface" % "0.11" % "test",
-        "org.scalatest" %% "scalatest" % "2.2.4" % "test",
-        "netflix" % "algorithm-model" % "1.2"
+        "org.scalatest" %% "scalatest" % "2.2.4" % "test"
       )
     )
   )
