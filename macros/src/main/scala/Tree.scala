@@ -1,6 +1,5 @@
 import scala.reflect.macros.Context
 import scala.language.experimental.macros
-import com.netflix.pvr.score.function.RegressionTreeScorer.{Leaf, Branch, Node}
 
 /**
  * Created by DB Tsai on 8/13/10.
