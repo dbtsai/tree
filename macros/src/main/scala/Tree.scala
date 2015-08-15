@@ -35,6 +35,11 @@ object Tree {
   def scorer_impl(c: Context)(root: c.Expr[Node]) = {
     import c.universe._
 
+    val res = root.tree match {
+      case q"node: Branch" => None
+      case q"node: Leaf" => None
+    }
+
     val tree = q"""if (input(0) < -5.0) { if (input(1) < 3.0) { 4.0 } else {-3.3} } else {if (input(1) < -5.0) { -2.2 } else {1.0}}"""
 
     val code =
