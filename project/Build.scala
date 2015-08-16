@@ -39,7 +39,8 @@ object MyBuild extends Build {
         else Nil
         ) ++ Seq(
         "com.novocode" % "junit-interface" % "0.11" % "test",
-        "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+        "org.scalatest" %% "scalatest" % "2.2.4" % "test",
+        "org.scala-lang" % "scala-compiler" % scalaVersion.value
       )
     )
   )

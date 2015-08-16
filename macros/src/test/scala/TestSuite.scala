@@ -14,12 +14,10 @@ class TestSuite extends FunSuite with BeforeAndAfterAll {
     val right = new Branch(1, -5.0, new Leaf(-2.2), new Leaf(1.0))
     val root: Branch = new Branch(0, -5.0, left, right)
 
-    println(Tree.NodeToCode(root))
+    // println(Tree.NodeToTree(root))
 
 
-    val (code, scorer) = Tree.getScorer(root)
-
-    print(code + "\n\n")
+    val scorer = Tree.getScorer(root)
 
     // Zeros.
     assert(1.0 == scorer(Array(0.0, 0.0)))

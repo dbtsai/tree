@@ -1,5 +1,6 @@
-import scala.reflect.macros.Context
 import scala.language.experimental.macros
+import scala.reflect.runtime.currentMirror
+import scala.tools.reflect.ToolBox
 
 /**
  * Created by DB Tsai on 8/13/10.
@@ -22,34 +23,26 @@ class Leaf(value: Double) extends Node {
 }
 
 object Tree {
+  val universe: scala.reflect.runtime.universe.type = scala.reflect.runtime.universe
 
-  def NodeToCode(root: Node): String = {
+  import universe._
+
+  def NodeToTree(root: Node): universe.Tree = {
     root match {
-      case node: Branch => s"if (input(${node.getIndex}) < ${node.getThreshold}) { ${NodeToCode(node.getLeft)} } else {${NodeToCode(node.getRight)}}"
-      case node: Leaf => s"${node.getValue}"
+      case node: Branch => q"if (input(${node.getIndex}) < ${node.getThreshold}) { ${NodeToTree(node.getLeft)} } else {  ${NodeToTree(node.getRight)} }"
+      case node: Leaf => q"${node.getValue}"
     }
   }
 
-  def getScorer(root: Node): (String, Array[Double] => Double) = macro scorer_impl
-
-  def scorer_impl(c: Context)(root: c.Expr[Node]) = {
-    import c.universe._
-
-    val res = root.tree match {
-      case q"node: Branch" => None
-      case q"node: Leaf" => None
-    }
-
-    val tree = q"""if (input(0) < -5.0) { if (input(1) < 3.0) { 4.0 } else {-3.3} } else {if (input(1) < -5.0) { -2.2 } else {1.0}}"""
-
+  def getScorer(root: Node): Array[Double] => Double = {
+    val toolbox = currentMirror.mkToolBox()
     val code =
       q"""
          (input: Array[Double]) => {
-            $tree
+            ${NodeToTree(root)}
          }
        """
-
-    val scalaCode = showCode(code)
-    q"($scalaCode, $code)"
+    print(showCode(code))
+    toolbox.eval(code).asInstanceOf[Array[Double] => Double]
   }
 }
